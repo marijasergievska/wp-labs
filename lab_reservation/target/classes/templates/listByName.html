@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Book Reservations</title>
+
+</head>
+<body>
+<h1 th:text="'Reservations for: ' + ${bookTitle}"></h1>
+<table>
+  <tr>
+    <th>Reader Name</th>
+    <th>Address</th>
+    <th>Number of Copies</th>
+  </tr>
+
+  <tr th:each="r : ${reservationsName}">
+    <td th:text="${r.readerName}"></td>
+    <td th:text="${r.readerAddress}"></td>
+    <td th:text="${r.numberOfCopies}"></td>
+  </tr>
+</table>
+
+<br>
+<a th:href="@{/books}">Back to Book List</a>
+
+</body>
+</html>

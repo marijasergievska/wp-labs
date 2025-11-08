@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Reservation - All Books</title>
+    <style>
+        body {
+            width: 800px;
+            margin: auto;
+            font-family: Arial, sans-serif;
+            background-color: #fff5f8; /* бледа пастелна позадина */
+        }
+        h1 {
+            color: #e76fa3; /* пастелно розова */
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: #ffeef5; /* светла пастелна табела */
+        }
+        table, th {
+            border: 1px solid #e76fa3;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #e76fa3;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #ffdce6; /* пастелна нијанса за редови */
+        }
+        .new {
+            margin: 2px;
+            background-color: #f5a8c1; /* пастелна розова */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            width: 270px;
+            height: 90px;
+            text-align: center;
+            line-height: 30px;
+            font-size: 18px;
+            padding: 10px;
+        }
+        .res{
+            padding:5px;
+            text-decoration: none;
+            width: 100px;
+            height: 30px;
+            font-size: 12px;
+            text-align: center;
+            background-color: #f5a8c1;
+            color: white;
+            border-radius: 5px;
+            border:none;
+        }
+        .res:hover {
+            background-color: #e76fa3; /* потемна пастелна розова при hover */
+        }
+        .new:hover {
+            background-color: #e76fa3; /* потемна пастелна розова при hover */
+        }
+        .button {
+            display: inline-block;
+            margin: 2px;
+            background-color: #f5a8c1; /* пастелна розова */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            width: 70px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            font-size: 12px;
+        }
+        .button:hover {
+            background-color: #e76fa3; /* потемна пастелна розова при hover */
+        }
+        .reservation-form {
+            margin-top: 30px;
+            border: 1px solid #e76fa3;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffeef5;
+        }
+        form.inline {
+            display: inline;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 50%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #e76fa3;
+            border-radius: 5px;
+        }
+        form.search-form {
+            margin-top: 15px;
+            text-align: center;
+        }
+        form.search-form input[type="text"],
+        form.search-form input[type="number"] {
+            width: 150px;
+            padding: 6px;
+            margin-right: 5px;
+            border: 1px solid #e76fa3;
+            border-radius: 4px;
+        }
+        form.search-form input[type="submit"] {
+            width: 70px;
+            height: 30px;
+            line-height: 30px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>All Books</h1>
+    <a class="new" th:href="@{/books/book-form}">Add New Book</a>
+
+    <form th:action="@{/books}" method="get" class="search-form">
+        <input type="text" name="text" placeholder="Search by title" th:value="${text}">
+        <input type="number" step="0.1" name="rating" placeholder="Min Rating" th:value="${rating}">
+        <input type="submit" value="Search" class="button">
+    </form>
+</header>
+
+<main>
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Rating</th>
+            <th>Author</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.genre}"></td>
+            <td th:text="${book.averageRating}"></td>
+            <td th:text="${book.author.name + ' ' + book.author.surname}"></td>
+            <td>
+                <a class="button" th:href="@{'/books/book-form/' + ${book.id}}">Edit</a>
+                <form th:action="@{'/books/delete/' + ${book.id}}" method="post" class="inline">
+                    <input type="submit" value="Delete" class="button"/>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="reservation-form">
+        <h2>Reserve a Book</h2>
+        <form action="/bookReservation" method="POST">
+            <label for="bookTitle">Choose a book:</label>
+            <select id="bookTitle" name="bookTitle" required>
+                <option th:each="book : ${books}" th:value="${book.title}" th:text="${book.title}"></option>
+            </select>
+            <br/>
+            <label for="readerName">Your Name:</label>
+            <input type="text" id="readerName" name="readerName" required>
+            <br/>
+            <label for="readerAddress">Your Address:</label>
+            <input type="text" id="readerAddress" name="readerAddress" required>
+            <br/>
+            <label for="numberOfCopies">Number of copies:</label>
+            <input type="number" id="numberOfCopies" name="numberOfCopies" min="1" max="10" required>
+
+            <br/><br/>
+            <input type="submit" value="Reserve Book" class="res">
+        </form>
+    </div>
+</main>
+</body>
+</html>

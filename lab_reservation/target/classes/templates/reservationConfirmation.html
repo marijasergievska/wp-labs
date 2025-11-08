@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Book Reservation - Confirmation</title>
+  <style type="text/css">
+    body {
+      width: 800px;
+      margin: auto;
+      font-family: Arial, sans-serif;
+      background-color: #ffeef8; /* нова светло пастелна розева позадина */
+      color: #333;
+    }
+
+    h1 {
+      color: #e27fa5; /* мека темно розева за насловот */
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    th {
+      background-color: #f4a7c1; /* пастелно розево за заглавија */
+      color: white;
+      padding: 12px;
+      text-align: left;
+    }
+
+    td {
+      background-color: #ffe0ec; /* светло пастелно розево за клетки */
+      padding: 10px;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #fff0f7; /* алтернатива пастелна боја за парни редови */
+    }
+
+    a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-top: 20px;
+      background-color: #e27fa5; /* темно розево за копчето */
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+
+    a:hover {
+      background-color: #f4a7c1; /* светло розево при hover */
+    }
+  </style>
+</head>
+<body>
+<section>
+  <header>
+    <h1>Book Reservation - Confirmation</h1>
+  </header>
+  <table>
+    <tr>
+      <th colspan="2">Your Reservation Status</th>
+    </tr>
+    <tr>
+      <td><b>Reader Name</b></td>
+      <td th:text="${reservation.readerName}"></td>
+    </tr>
+    <tr>
+      <td><b>Client IP Address</b></td>
+      <td th:text="${clientIp}"></td>
+    </tr>
+    <tr>
+      <td><b>Reservation for Book</b></td>
+      <td th:text="${reservation.bookTitle}"></td>
+    </tr>
+    <tr>
+      <td><b>Number of copies</b></td>
+      <td th:text="${reservation.numberOfCopies}"></td>
+    </tr>
+  </table>
+</section>
+
+<a th:href="@{/books}">Back to Book List</a>
+</body>
+</html>

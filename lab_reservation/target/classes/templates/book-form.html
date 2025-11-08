@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${isEdit} ? 'Edit Book' : 'Add New Book'">Book Form</title>
+  <style>
+    body {
+      width: 600px;
+      margin: auto;
+      font-family: Arial, sans-serif;
+      background-color: #fff5f8; /* пастелна позадина */
+    }
+    h1 {
+      color: #e76fa3; /* пастелно розова */
+      text-align: center;
+      margin-top: 20px;
+    }
+    form {
+      margin-top: 20px;
+      border: 1px solid #e76fa3;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #ffeef5;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="number"], select {
+      width: 60%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #e76fa3;
+      border-radius: 5px;
+      background-color: #fff0f6;
+    }
+    input[type="submit"] {
+      width: 120px;
+      height: 35px;
+      background-color: #f5a8c1; /* пастелна розова */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    input[type="submit"]:hover {
+      background-color: #e76fa3; /* потемна пастелна розова */
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #f5a8c1;
+      font-weight: bold;
+    }
+    a:hover {
+      color: #e76fa3;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1 th:text="${isEdit} ? 'Edit Book' : 'Add New Book'">Book Form</h1>
+</header>
+
+<main>
+
+  <form th:if="${isEdit}" th:action="@{/books/edit/{id}(id=${book.id})}" method="post">
+    <label for="titleField">Title:</label>
+    <input type="text" id="titleField" name="title" th:value="${book.title}" required>
+
+    <label for="genreField">Genre:</label>
+    <input type="text" id="genreField" name="genre" th:value="${book.genre}" required>
+
+    <label for="ratingField">Average Rating:</label>
+    <input type="number" step="0.1" id="ratingField" name="averageRating" th:value="${book.averageRating}" required>
+
+    <label for="authorField">Author:</label>
+    <select id="authorField" name="authorId" required>
+      <option th:each="author : ${authors}"
+              th:value="${author.id}"
+              th:text="${author.name + ' ' + author.surname}"
+              th:selected="${book.author != null} ? ${author.id} == ${book.author.id} : false">
+      </option>
+    </select>
+
+    <input type="submit" th:value="${isEdit} ? 'Update Book' : 'Add Book'">
+  </form>
+
+
+  <form th:unless="${isEdit}" th:action="@{/books/add}" method="post">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" th:value="${book.title}" required>
+
+    <label for="genre">Genre:</label>
+    <input type="text" id="genre" name="genre" th:value="${book.genre}" required>
+
+    <label for="averageRating">Average Rating:</label>
+    <input type="number" step="0.1" id="averageRating" name="averageRating" th:value="${book.averageRating}" required>
+
+    <label for="authorId">Author:</label>
+    <select id="authorId" name="authorId" required>
+      <option th:each="author : ${authors}"
+              th:value="${author.id}"
+              th:text="${author.name + ' ' + author.surname}">
+      </option>
+    </select>
+
+    <input type="submit" value="Add Book">
+  </form>
+
+  <a href="/books">Back to Book List</a>
+</main>
+</body>
+</html>
