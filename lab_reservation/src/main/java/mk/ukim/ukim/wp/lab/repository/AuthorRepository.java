@@ -1,35 +1,42 @@
 package mk.ukim.ukim.wp.lab.repository;
 
 import mk.ukim.ukim.wp.lab.model.Author;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class AuthorRepository {
+public interface AuthorRepository extends JpaRepository<Author, Long> {
 
-    private static final List<Author> authors = new ArrayList<>();
+//    private static final List<Author> authors = new ArrayList<>();
+//
+////    static {
+////        authors.add(new Author(1L, "Ivo", "Andric", "Yugoslavia", "Nobel prize winner"));
+////        authors.add(new Author(2L, "Fyodor", "Dostoevsky", "Russia", "Russian novelist"));
+////        authors.add(new Author(3L, "Jane", "Austen", "England", "English novelist"));
+////        authors.add(new Author(4L, "J.K", "Rowling", "England", "English novelist"));
+////
+////    }
+//
+//    public List<Author> findAll() {
+//        return authors;
+//    }
+//
+//    public Author findById(Long id) {
+//        return authors.stream()
+//                .filter(a -> a.getId().equals(id))
+//                .findFirst()
+//                .orElse(null);
+//    }
+//
+//    public static List<Author> getInitialsAuthors(){
+//        return authors;
+//    }
 
-    static {
-        authors.add(new Author(1L, "Ivo", "Andric", "Yugoslavia", "Nobel prize winner"));
-        authors.add(new Author(2L, "Fyodor", "Dostoevsky", "Russia", "Russian novelist"));
-        authors.add(new Author(3L, "Jane", "Austen", "England", "English novelist"));
-    }
+    Optional<Author> findByNameAndSurname(String name, String surname);
 
-    public List<Author> findAll() {
-        return authors;
-    }
-
-    public Author findById(Long id) {
-        return authors.stream()
-                .filter(a -> a.getId().equals(id))
-                .findFirst()
-                .orElse(null);
-    }
-
-    public static List<Author> getInitialsAuthors(){
-        return authors;
-    }
 
 }

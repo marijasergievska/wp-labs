@@ -143,6 +143,7 @@
             <th>Genre</th>
             <th>Rating</th>
             <th>Author</th>
+            <th>Likes</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -152,10 +153,14 @@
             <td th:text="${book.genre}"></td>
             <td th:text="${book.averageRating}"></td>
             <td th:text="${book.author.name + ' ' + book.author.surname}"></td>
+            <td th:text="'Likes: ' + ${book.likeCounter}"></td>
             <td>
                 <a class="button" th:href="@{'/books/book-form/' + ${book.id}}">Edit</a>
                 <form th:action="@{'/books/delete/' + ${book.id}}" method="post" class="inline">
                     <input type="submit" value="Delete" class="button"/>
+                </form>
+                <form th:action="@{'/books/likes/' + ${book.id}}" method="post" class="inline">
+                    <input type="submit" value="Like" class="button"/>
                 </form>
             </td>
         </tr>

@@ -1,18 +1,19 @@
 package mk.ukim.ukim.wp.lab.model;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
 
-@Data
-@Getter
-@Setter
+
+@Entity
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    String title;
-    String genre;
-    double averageRating;
+    private String title;
+    private String genre;
+    private double averageRating;
+    @ManyToOne
     private Author author;
+    private int likeCounter=0;
 
     public Book() {}
     public Book(Long id, String title, String genre, double averageRating, Author author) {
@@ -21,15 +22,23 @@ public class Book {
         this.genre = genre;
         this.averageRating = averageRating;
         this.author = author;
+        this.likeCounter=0;
     }
 
+    public int getLikeCounter() {
+        return likeCounter;
+    }
 
+    public void setLikeCounter(int likeCounter) {
+        this.likeCounter = likeCounter;
+    }
 
-    public Book(String genre, String title, double averageRating, Author author) {
+    public Book(String title, String genre, double averageRating, Author author) {
         this.genre = genre;
         this.title = title;
         this.averageRating = averageRating;
         this.author = author;
+        this.likeCounter=0;
     }
 
     public Long getId() {
